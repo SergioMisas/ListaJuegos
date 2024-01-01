@@ -3,4 +3,10 @@
     <string name="games">Juegos</string>
     <string name="create">Crear</string>
     <string name="filter">Filtrar</string>
+    <string name="name">Nombre</string>
+    <string name="platform">Plataforma</string>
+    <string name="dateStart">Fecha de inicio</string>
+    <string name="dateEnd">Fecha de finalización</string>
+    <string name="imageURL">URL de la imagen</string>
+    <string name="state">Estado</string>
 </resources>

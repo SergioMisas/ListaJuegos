@@ -46,6 +46,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:hint="@string/dateStart"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -73,6 +74,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:hint="@string/dateEnd"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,8 +92,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/imageURL"
-                />
+                android:hint="@string/imageURL" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
@@ -111,9 +112,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/platform"
-            app:layout_constraintTop_toBottomOf="@id/textInputImage"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/textInputImage" />
 
         <Spinner
             android:id="@+id/spinnerPlatform"
@@ -143,9 +143,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="@string/state"
-            app:layout_constraintTop_toBottomOf="@id/spinnerPlatform"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/spinnerPlatform" />
 
         <Spinner
             android:id="@+id/spinnerState"
@@ -163,13 +162,12 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
+            android:src="@drawable/icon_game"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerState"
-            android:src="@drawable/icon_game"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerState" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddGame"

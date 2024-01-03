@@ -18,8 +18,8 @@ data class Game(
     val platform: String,
     val status: Status,
     val isFavorite: Boolean,
-    val startDate: String?,
-    val finishDate: String?
+    val startDate: String,
+    val finishDate: String
 ) {
     enum class Status(val text: String) {
         PLAYING("Jugando"),

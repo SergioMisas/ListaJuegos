@@ -65,10 +65,10 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
             setMessage(
                     "Nombre: ${game.name}\n" +
                     "Plataforma: ${game.platform}\n" +
-                    "Status: ${game.status}\n" +
-                    "Favorito: ${game.isFavorite}\n" +
-                    "FechaInicio:${game.startDate}\n" +
-                    "FechaFin:${game.finishDate}"
+                    "Estado: ${game.status.text}\n" +
+                    "Favorito: ${if (game.isFavorite) "Sí" else "No"}\n" +
+                    "Fecha Inicio:${game.startDate}\n" +
+                    "Fecha Fin:${game.finishDate}"
             )
 
             setPositiveButton("Fav/Unfav") { _, _ ->

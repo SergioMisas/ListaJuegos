@@ -9,4 +9,7 @@
     <string name="dateEnd">Fecha de finalización</string>
     <string name="imageURL">URL de la imagen</string>
     <string name="state">Estado</string>
+    <string name="favorites">Favoritos</string>
+    <string name="favorite_games">Juegos favoritos</string>
+    <string name="select_filter">Seleccionar filtros</string>
 </resources>

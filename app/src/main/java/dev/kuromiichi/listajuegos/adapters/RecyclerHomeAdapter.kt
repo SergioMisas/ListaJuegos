@@ -45,7 +45,7 @@ class RecyclerHomeAdapter(
 
                 Game.Status.PLAYING -> {
                     binding.textViewFechaInicio.visibility = ViewGroup.VISIBLE
-                    binding.textViewFechaInicio.text = game.startDate
+                    binding.textViewFechaInicio.text = "Fecha de inicio: ${game.startDate}"
                     binding.textViewFechaFin.visibility = ViewGroup.GONE
                     binding.textViewEstado.setBackgroundColor(
                         ContextCompat.getColor(
@@ -57,9 +57,9 @@ class RecyclerHomeAdapter(
 
                 Game.Status.FINISHED -> {
                     binding.textViewFechaInicio.visibility = ViewGroup.VISIBLE
-                    binding.textViewFechaInicio.text = game.startDate
+                    binding.textViewFechaInicio.text = "Fecha de inicio: ${game.startDate}"
                     binding.textViewFechaFin.visibility = ViewGroup.VISIBLE
-                    binding.textViewFechaFin.text = game.finishDate
+                    binding.textViewFechaFin.text = "Fecha de finalizado: ${game.finishDate}"
                     binding.textViewEstado.setBackgroundColor(
                         ContextCompat.getColor(
                             binding.textViewEstado.context,

@@ -11,15 +11,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
-import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import dev.kuromiichi.listajuegos.adapters.RecyclerHomeAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import dev.kuromiichi.listajuegos.adapters.GameAdapter
 import dev.kuromiichi.listajuegos.database.GameDatabase
 import dev.kuromiichi.listajuegos.databinding.DialogModifyBinding
 import dev.kuromiichi.listajuegos.databinding.FragmentHomeBinding
-import dev.kuromiichi.listajuegos.listeners.RecyclerHomeOnClickListener
+import dev.kuromiichi.listajuegos.listeners.GameOnClickListener
 import dev.kuromiichi.listajuegos.models.Game
 import dev.kuromiichi.listajuegos.models.Platform
 import dev.kuromiichi.listajuegos.validators.validate
@@ -27,10 +25,11 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
+class HomeFragment : Fragment(), GameOnClickListener {
     private lateinit var mBinding: FragmentHomeBinding
-    private lateinit var mAdapter: RecyclerHomeAdapter
+    private lateinit var mAdapter: GameAdapter
     private var games: List<Game> = emptyList()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,30 +44,34 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
     }
 
     private fun setRecycler() {
-        val gameDao = GameDatabase.getInstance(requireContext()).gameDao()
+        mAdapter = GameAdapter(emptyList(), this)
+        mBinding.recyclerViewHome.apply {
+            adapter = mAdapter
+            layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        }
+        updateRecycler()
+    }
+
+    private fun updateRecycler() {
         Thread {
-            games = gameDao.findAll()
+            games = GameDatabase.getInstance(requireContext()).gameDao().findAll()
         }.apply {
             start()
             join()
         }
-        mAdapter = RecyclerHomeAdapter(games, this)
-        mBinding.recyclerViewHome.apply {
-            adapter = mAdapter
-            layoutManager = GridLayoutManager(context, 2)
-        }
+        mAdapter.setData(games)
     }
 
-    override fun onGameClick(game: Game) {
+    override fun onClick(game: Game) {
         AlertDialog.Builder(requireContext()).apply {
             setTitle(game.name)
             setMessage(
-                    "Nombre: ${game.name}\n" +
-                    "Plataforma: ${game.platform}\n" +
-                    "Estado: ${game.status.text}\n" +
-                    "Favorito: ${if (game.isFavorite) "Sí" else "No"}\n" +
-                    "Fecha Inicio:${game.startDate}\n" +
-                    "Fecha Fin:${game.finishDate}"
+                "Nombre: ${game.name}\n" +
+                        "Plataforma: ${game.platform}\n" +
+                        "Estado: ${game.status.text}\n" +
+                        "Favorito: ${if (game.isFavorite) "Sí" else "No"}\n" +
+                        "Fecha Inicio:${game.startDate}\n" +
+                        "Fecha Fin:${game.finishDate}"
             )
 
             setPositiveButton("Fav/Unfav") { _, _ ->
@@ -79,8 +82,7 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
                     start()
                     join()
                 }
-                setRecycler()
-
+                updateRecycler()
             }
 
             setNeutralButton("Modificar") { _, _ ->
@@ -92,7 +94,6 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
     private fun setModifyDialog(game: Game) {
         AlertDialog.Builder(requireContext()).apply {
             val binding = DialogModifyBinding.inflate(layoutInflater)
-
 
             setView(binding.root)
 
@@ -110,7 +111,6 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
                 ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, statusItems)
                     .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
-            Glide.with(requireContext()).load(game.image).into(binding.imageViewImage)
             binding.textInputImage.editText?.setText(game.image)
             binding.textInputDateStart.editText?.setText(game.startDate)
             binding.textInputDateEnd.editText?.setText(game.finishDate)
@@ -123,25 +123,16 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
                 datePickerDialog(binding.textInputDateEnd.editText!!)
             }
 
-            binding.textInputImage.editText?.doOnTextChanged { text, _, _, _ ->
-                if (text.toString().isNotEmpty()) {
-                    Glide.with(requireContext())
-                        .load(text.toString())
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .error(android.R.drawable.ic_menu_report_image)
-                        .into(binding.imageViewImage)
-                }
-            }
-
             setPositiveButton("Modificar") { _, _ ->
-                val gameNew = game.copy(
-                    platform = binding.spinnerPlatform.selectedItem.toString(),
+                val newGame = game.copy(
                     image = binding.textInputImage.editText?.text.toString(),
+                    platform = binding.spinnerPlatform.selectedItem.toString(),
+                    status = Game.Status.entries[binding.spinnerState.selectedItemPosition],
                     startDate = binding.textInputDateStart.editText?.text.toString(),
                     finishDate = binding.textInputDateEnd.editText?.text.toString()
                 )
 
-                val res = gameNew.validate()
+                val res = newGame.validate()
                 if (res != "") {
                     Toast.makeText(requireContext(), res, Toast.LENGTH_LONG).show()
                     return@setPositiveButton
@@ -149,7 +140,7 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
                 var success = true
                 Thread {
                     try {
-                        GameDatabase.getInstance(requireContext()).gameDao().update(gameNew)
+                        GameDatabase.getInstance(requireContext()).gameDao().update(newGame)
                     } catch (e: SQLiteConstraintException) {
                         success = false
                     }
@@ -165,19 +156,20 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
                     ).show()
                     return@setPositiveButton
                 }
+
                 Toast.makeText(requireContext(), "Juego modificado", Toast.LENGTH_LONG).show()
-                setRecycler()
+                updateRecycler()
             }
 
             setNeutralButton("Eliminar") { _, _ ->
                 Thread {
                     GameDatabase.getInstance(requireContext()).gameDao().delete(game)
                 }
-                .apply {
-                    start()
-                    join()
-                }
-                setRecycler()
+                    .apply {
+                        start()
+                        join()
+                    }
+                updateRecycler()
             }
 
             setNegativeButton("Cancelar") { _, _ -> }
@@ -205,7 +197,6 @@ class HomeFragment : Fragment(), RecyclerHomeOnClickListener {
             calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
-
 
 
     private fun findPlatforms(): List<Platform> {

@@ -53,7 +53,7 @@ dependencies {
     kapt("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    //Glide
+    // Glide
     val glideVersion = "4.15.1"
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     kapt("com.github.bumptech.glide:compiler:$glideVersion")

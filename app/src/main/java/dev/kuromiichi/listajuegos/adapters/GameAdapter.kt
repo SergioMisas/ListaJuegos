@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.kuromiichi.listajuegos.R
 import dev.kuromiichi.listajuegos.databinding.ItemGameBinding
-import dev.kuromiichi.listajuegos.listeners.RecyclerHomeOnClickListener
+import dev.kuromiichi.listajuegos.listeners.GameOnClickListener
 import dev.kuromiichi.listajuegos.models.Game
 
-class RecyclerHomeAdapter(
-    val games: List<Game>,
-    val listener: RecyclerHomeOnClickListener
-) : RecyclerView.Adapter<RecyclerHomeAdapter.ViewHolder>() {
+class GameAdapter(
+    private var games: List<Game>,
+    val listener: GameOnClickListener
+) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
@@ -45,7 +45,7 @@ class RecyclerHomeAdapter(
 
                 Game.Status.PLAYING -> {
                     binding.textViewFechaInicio.visibility = ViewGroup.VISIBLE
-                    binding.textViewFechaInicio.text = "Fecha de inicio: ${game.startDate}"
+                    binding.textViewFechaInicio.text = "Inicio: ${game.startDate}"
                     binding.textViewFechaFin.visibility = ViewGroup.GONE
                     binding.textViewEstado.setBackgroundColor(
                         ContextCompat.getColor(
@@ -57,9 +57,9 @@ class RecyclerHomeAdapter(
 
                 Game.Status.FINISHED -> {
                     binding.textViewFechaInicio.visibility = ViewGroup.VISIBLE
-                    binding.textViewFechaInicio.text = "Fecha de inicio: ${game.startDate}"
+                    binding.textViewFechaInicio.text = "Inicio: ${game.startDate}"
                     binding.textViewFechaFin.visibility = ViewGroup.VISIBLE
-                    binding.textViewFechaFin.text = "Fecha de finalizado: ${game.finishDate}"
+                    binding.textViewFechaFin.text = "Fin: ${game.finishDate}"
                     binding.textViewEstado.setBackgroundColor(
                         ContextCompat.getColor(
                             binding.textViewEstado.context,
@@ -72,7 +72,7 @@ class RecyclerHomeAdapter(
 
         fun setListeners(game: Game) {
             binding.imageViewJuego.setOnClickListener {
-                listener.onGameClick(game)
+                listener.onClick(game)
             }
         }
     }
@@ -89,7 +89,12 @@ class RecyclerHomeAdapter(
         return ViewHolder(view as ViewGroup)
     }
 
-    override fun onBindViewHolder(holder: RecyclerHomeAdapter.ViewHolder, position: Int) {
+    fun setData(games: List<Game>) {
+        this.games = games
+        notifyDataSetChanged()
+    }
+
+    override fun onBindViewHolder(holder: GameAdapter.ViewHolder, position: Int) {
         holder.bind(games[position])
         holder.setListeners(games[position])
     }

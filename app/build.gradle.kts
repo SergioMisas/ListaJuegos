@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.ui:ui-graphics-android:1.5.4")
     // Navigation
     val navVersion = "2.7.6"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
@@ -52,10 +53,10 @@ dependencies {
     kapt("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    // Glide
+    //Glide
     val glideVersion = "4.15.1"
     implementation("com.github.bumptech.glide:glide:$glideVersion")
-    annotationProcessor("com.github.bumptech.glide:compiler:$glideVersion")
+    kapt("com.github.bumptech.glide:compiler:$glideVersion")
 
 
     implementation("androidx.core:core-ktx:1.10.1")

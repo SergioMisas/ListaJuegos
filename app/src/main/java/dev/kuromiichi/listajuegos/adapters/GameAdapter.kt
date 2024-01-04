@@ -26,8 +26,10 @@ class GameAdapter(
                 false -> binding.imageViewFavorito.setImageResource(R.drawable.icon_favourite_border)
             }
 
-            Glide.with(binding.imageViewJuego).load(game.image)
-                .error(android.R.drawable.ic_menu_report_image).into(binding.imageViewJuego)
+            Glide.with(binding.imageViewJuego)
+                .load(game.image)
+                .error(android.R.drawable.ic_menu_report_image)
+                .into(binding.imageViewJuego)
             binding.textViewTitulo.text = game.name
             binding.textViewPlataforma.text = game.platform
 
@@ -102,5 +104,4 @@ class GameAdapter(
     override fun getItemCount(): Int {
         return games.size
     }
-
 }

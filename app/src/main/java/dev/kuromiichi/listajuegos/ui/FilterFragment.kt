@@ -31,13 +31,14 @@ class FilterFragment : Fragment(), GameOnClickListener {
     private lateinit var mBinding: FragmentFilterBinding
     private lateinit var mAdapter: GameAdapter
     private var games: List<Game> = emptyList()
-    private val filter = Filter(null, null, false)
 
     class Filter(
         var platform: String?,
         var state: String?,
         var favorite: Boolean
     )
+
+    private val filter = Filter(null, null, false)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

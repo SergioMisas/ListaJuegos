@@ -40,6 +40,7 @@ class HomeFragment : Fragment(), GameOnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setRecycler()
     }
 
@@ -173,10 +174,7 @@ class HomeFragment : Fragment(), GameOnClickListener {
             }
 
             setNegativeButton("Cancelar") { _, _ -> }
-
-
         }.show()
-
     }
 
     private fun datePickerDialog(textInput: EditText) {

@@ -9,11 +9,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:cardCornerRadius="8dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,70 +24,64 @@
                 android:id="@+id/textViewEstado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:background="@color/red"
-                />
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageViewJuego"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_game"
                 android:adjustViewBounds="true"
-                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/icon_game"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewEstado"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewEstado" />
 
             <TextView
                 android:id="@+id/textViewTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:text=""
                 android:textSize="24sp"
-                android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageViewJuego"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewJuego" />
 
             <TextView
                 android:id="@+id/textViewPlataforma"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text=""
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewTitulo"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTitulo" />
 
             <TextView
                 android:id="@+id/textViewFechaInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewPlataforma"
+                android:text=""
                 android:visibility="gone"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewPlataforma" />
 
             <TextView
                 android:id="@+id/textViewFechaFin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewFechaInicio"
+                android:text=""
                 android:visibility="gone"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewFechaInicio" />
 
             <ImageView
                 android:id="@+id/imageViewFavorito"
@@ -95,16 +89,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:src="@drawable/icon_favourite_border"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewFechaFin"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewFechaFin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

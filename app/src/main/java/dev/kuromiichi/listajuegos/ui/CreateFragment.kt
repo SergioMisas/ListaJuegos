@@ -54,50 +54,54 @@ class CreateFragment : Fragment() {
         }
 
         mBinding.imageButtonAddPlatform.setOnClickListener {
-            AlertDialog.Builder(requireContext()).apply {
-                val binding = DialogCreatePlatformBinding.inflate(layoutInflater)
-                setView(binding.root)
+            createPlatformDialog()
+        }
+    }
 
-                setTitle("Añadir plataforma")
+    private fun createPlatformDialog() {
+        AlertDialog.Builder(requireContext()).apply {
+            val binding = DialogCreatePlatformBinding.inflate(layoutInflater)
+            setView(binding.root)
 
-                setPositiveButton("Confirmar") { _, _ ->
-                    if (binding.editTextPlatform.text.isEmpty()) {
-                        Toast.makeText(
-                            requireContext(),
-                            "El nombre no puede estar vacío",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return@setPositiveButton
-                    }
-                    val platforms = findPlatforms()
-                    if (platforms.any { it.name == binding.editTextPlatform.text.toString() }) {
-                        Toast.makeText(
-                            requireContext(),
-                            "La plataforma ya existe",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return@setPositiveButton
-                    }
-                    Thread {
-                        GameDatabase.getInstance(requireContext()).platformDao().insert(
-                            Platform(binding.editTextPlatform.text.toString())
-                        )
-                    }.apply {
-                        start()
-                        join()
-                    }
+            setTitle("Añadir plataforma")
+
+            setPositiveButton("Confirmar") { _, _ ->
+                if (binding.editTextPlatform.text.isEmpty()) {
                     Toast.makeText(
                         requireContext(),
-                        "Plataforma añadida: ${binding.editTextPlatform.text}",
+                        "El nombre no puede estar vacío",
                         Toast.LENGTH_LONG
                     ).show()
-
-                    setSpinners()
+                    return@setPositiveButton
                 }
+                val platforms = findPlatforms()
+                if (platforms.any { it.name == binding.editTextPlatform.text.toString() }) {
+                    Toast.makeText(
+                        requireContext(),
+                        "La plataforma ya existe",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@setPositiveButton
+                }
+                Thread {
+                    GameDatabase.getInstance(requireContext()).platformDao().insert(
+                        Platform(binding.editTextPlatform.text.toString())
+                    )
+                }.apply {
+                    start()
+                    join()
+                }
+                Toast.makeText(
+                    requireContext(),
+                    "Plataforma añadida: ${binding.editTextPlatform.text}",
+                    Toast.LENGTH_LONG
+                ).show()
 
-                setNegativeButton("Cancelar") { _, _ -> }
-            }.show()
-        }
+                setSpinners()
+            }
+
+            setNegativeButton("Cancelar") { _, _ -> }
+        }.show()
     }
 
     private fun setSpinners() {

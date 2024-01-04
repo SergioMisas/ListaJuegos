@@ -30,7 +30,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/name" />
+                android:hint="@string/name"
+                android:maxLines="2"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -92,7 +93,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/imageURL" />
+                android:hint="@string/imageURL"
+                android:inputType="textVisiblePassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
@@ -175,6 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/icon_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
